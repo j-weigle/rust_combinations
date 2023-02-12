@@ -227,14 +227,8 @@ mod tests {
     fn test_qualifying_combinations_positions() {
         let result =
             combinations_qualifying_positions(&(1..4).collect(), 2, |v: &Vec<i32>| -> bool {
-                let mut sum = 0;
-                for i in 0..v.len() {
-                    sum += v[i];
-                }
-                if sum < 5 {
-                    return true;
-                }
-                false
+                let sum: i32 = v.iter().sum();
+                sum < 5
             });
         assert_eq!(result.len(), 2);
     }
@@ -243,10 +237,7 @@ mod tests {
     fn test_all_qualifying_positions() {
         let result = all_qualifying_positions(&(1..4).collect(), |v: &Vec<i32>| -> bool {
             let sum: i32 = v.iter().sum();
-            if sum < 5 {
-                return true;
-            }
-            false
+            sum < 5
         });
         assert_eq!(result.len(), 5);
     }
