@@ -1,7 +1,9 @@
 # Overview
+
 Gives all combinations of a vec that contains unique items.
 
 ## The algorithm
+
 This crate uses binary iteration to generate the possible combinations by
 utilizing the 1s bits and 1s counts to get the combinations.
 
@@ -12,6 +14,7 @@ This gives the combinations: \[001, 010, 011, 100, 101, 110, 111\]
 Which is: \[\[1\], \[2\], \[1, 2\], \[3\], \[1, 3\], \[2, 3\], \[1, 2, 3\]\]
 
 ## functionality
+
 - all combinations
 - all qualifying combinations
 - positions of all qualifying combinations
@@ -19,12 +22,13 @@ Which is: \[\[1\], \[2\], \[1, 2\], \[3\], \[1, 3\], \[2, 3\], \[1, 2, 3\]\]
 - positions of combinations of a particular length
 - positions of qualifying combinations of a particular length
 
-*NOTE: positions is the position in the vector of vectors of all combinations
+_NOTE: positions is the position in the vector of vectors of all combinations
 possible, where the list is 1 indexed rather than 0. Therefore if you have
-vector \[1, 2\] and your total set is \[\[1\], \[2\], \[1, 2\]\] then position 1 is
-the vector \[1\] and position 3 is the vector \[1, 2\]*
+vector \[1, 2\] and your total set is \[\[1\], \[2\], \[1, 2\]\] then position
+1 is the vector \[1\] and position 3 is the vector \[1, 2\]_
 
 ## Why unique only
+
 Providing a vec with non-unique items, it will give you more than you want.
 
 This crate could have been made more robust to prevent duplication, but
@@ -34,7 +38,9 @@ handles cases of non-unique vectors, please see:
 <https://crates.io/crates/combinations>
 
 ### Example:
+
 this fails:
+
 ```
  use combinations::combinations;
 
@@ -47,7 +53,9 @@ this fails:
  // Following would fail!
  // assert_eq!(actual, expected);
 ```
+
 this passes:
+
 ```
  use combinations::combinations;
 
