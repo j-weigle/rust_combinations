@@ -61,6 +61,18 @@
 //! assert_eq!(actual, expected);
 //! ```
 
+/// get_subset gets the nth subset of all possible combination subsets
+///that could be gotten from v when using the all function
+pub fn get_subset<T: Copy>(v: &Vec<T>, pos: u128) -> Vec<T> {
+    let mut subset: Vec<T> = vec![];
+    for i in 0..v.len() {
+        if (pos >> i) & 1 == 1 {
+            subset.push(v[i]);
+        }
+    }
+    subset
+}
+
 /// all gets every combination subset that is possible for the set v
 pub fn all<T: Copy>(v: &Vec<T>) -> Vec<Vec<T>> {
     let mut subsets: Vec<Vec<T>> = vec![];
@@ -166,18 +178,6 @@ pub fn combinations_qualifying_positions<T: Copy>(
     positions
 }
 
-/// get_subset gets the nth subset of all possible combination subsets
-///that could be gotten from v when using the all function
-pub fn get_subset<T: Copy>(v: &Vec<T>, pos: u128) -> Vec<T> {
-    let mut subset: Vec<T> = vec![];
-    for i in 0..v.len() {
-        if (pos >> i) & 1 == 1 {
-            subset.push(v[i]);
-        }
-    }
-    subset
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -208,6 +208,27 @@ mod tests {
     }
 
     #[test]
+    fn test_all_qualifying() {
+        let result = all_qualifying(&(1..4).collect(), |v: &Vec<i32>| -> bool {
+            let sum: i32 = v.iter().sum();
+            sum < 5
+        });
+        assert_eq!(
+            result,
+            vec![vec![1], vec![2], vec![1, 2], vec![3], vec![1, 3]]
+        );
+    }
+
+    #[test]
+    fn test_all_qualifying_positions() {
+        let result = all_qualifying_positions(&(1..4).collect(), |v: &Vec<i32>| -> bool {
+            let sum: i32 = v.iter().sum();
+            sum < 5
+        });
+        assert_eq!(result.len(), 5);
+    }
+
+    #[test]
     fn test_combinations() {
         let result = combinations(&(1..4).collect(), 2);
         assert_eq!(result, vec![vec![1, 2], vec![1, 3], vec![2, 3]]);
@@ -224,22 +245,13 @@ mod tests {
     }
 
     #[test]
-    fn test_qualifying_combinations_positions() {
+    fn test_combinations_qualifying_positions() {
         let result =
             combinations_qualifying_positions(&(1..4).collect(), 2, |v: &Vec<i32>| -> bool {
                 let sum: i32 = v.iter().sum();
                 sum < 5
             });
         assert_eq!(result.len(), 2);
-    }
-
-    #[test]
-    fn test_all_qualifying_positions() {
-        let result = all_qualifying_positions(&(1..4).collect(), |v: &Vec<i32>| -> bool {
-            let sum: i32 = v.iter().sum();
-            sum < 5
-        });
-        assert_eq!(result.len(), 5);
     }
 
     #[test]
